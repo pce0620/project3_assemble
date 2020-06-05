@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>white.jsp</title>
-</head>
+</head> 
 <body>
 	<h2>글쓰기 폼</h2>
 	<form action="writeOk">

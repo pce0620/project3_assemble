@@ -1,5 +1,7 @@
 package kr.co.assemble.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,5 +49,60 @@ public class BoardController {
 		
 		return "board/wall";
 	}
+	
+	
+	//그룹별 게시글 조회
+	@RequestMapping(value = "/wall")
+	public String boardlist(
+			@RequestParam(value = "groupno") int groupno, Model model){
+		
+		List<BoardDTO> list = dao.boardlist(groupno);
+
+		model.addAttribute("list", list);
+		
+		return "board/wall";
+	}
+	
+	
+	//bno로 게시글 전체 조회
+	@RequestMapping(value = "/selectbno")
+	public String selectbno(
+			@RequestParam(value = "bno")int bno, Model model) {
+		System.out.println(bno);
+		
+		List<BoardDTO> list = dao.selectOne(bno);
+		model.addAttribute("list", list);
+		
+		return "board/modify";
+	}
+	
+	
+	
+	
+	
+	
+	//게시글 수정
+//	@RequestMapping(value = "/modifyBoard")
+//	public String modify(
+//			@RequestParam(value = "bno") int bno, Model model) {
+//		
+//		BoardDTO dto = new BoardDTO();
+//		dto.setBno(bno);
+//		
+//		dao.updateBoard(dto);
+//		model.addAttribute("dto", dto);
+//		
+//		
+//		return "board/wall";
+//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
