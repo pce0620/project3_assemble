@@ -25,11 +25,39 @@ public class BoardDAOImple implements BoardDAO{
 	public void write(BoardDTO dto) {
 		ss.insert("writeBoard", dto);
 	}
-
+	
+	//그룹별 전체조회
 	@Override
 	public List<BoardDTO> boardlist(int groupno) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<BoardDTO> list = ss.selectList("selectGroupBoard", groupno);
+		
+		return list;
 	}
+
+	//글 수정
+	@Override
+	public void updateBoard(BoardDTO dto) {
+		ss.update("updateBoard", dto);
+	}
+	
+	//bno로 전체조회
+	@Override
+	public List<BoardDTO> selectOne(int bno) {
+		
+		List<BoardDTO> list = ss.selectOne("selectOneBno", bno);
+		
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
