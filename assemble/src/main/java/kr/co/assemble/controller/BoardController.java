@@ -64,10 +64,10 @@ public class BoardController {
 	}
 	
 	
-	//bno로 게시글 전체 조회
-	@RequestMapping(value = "/selectbno")
+	//게시글 수정을 위한 bno로 해당 게시글 정보 조회
+	@RequestMapping(value = "/selectBoard")
 	public String selectbno(
-			@RequestParam(value = "bno")int bno, Model model) {
+			@RequestParam(value = "bno") int bno, Model model) {
 		System.out.println(bno);
 		
 		List<BoardDTO> list = dao.selectOne(bno);
@@ -77,24 +77,55 @@ public class BoardController {
 	}
 	
 	
-	
-	
-	
-	
 	//게시글 수정
-//	@RequestMapping(value = "/modifyBoard")
-//	public String modify(
-//			@RequestParam(value = "bno") int bno, Model model) {
-//		
-//		BoardDTO dto = new BoardDTO();
-//		dto.setBno(bno);
-//		
-//		dao.updateBoard(dto);
-//		model.addAttribute("dto", dto);
-//		
-//		
-//		return "board/wall";
-//	}
+	@RequestMapping(value = "/modify")
+	public String modifyBoard(
+			@RequestParam(value = "bno") int bno,
+			@RequestParam(value = "contents") String contents,
+			@RequestParam(value = "groupno") int groupno, Model model) {
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setBno(bno);
+		dto.setBoardcontents(contents);
+		
+		dao.updateBoard(dto);
+
+				
+		model.addAttribute("dto", dto);
+		model.addAttribute("groupno", groupno);
+		
+		return "redirect:/wall";
+	}
+	
+	
+	//게시글 삭제
+	@RequestMapping(value = "/deleteBoard")
+	public String deleteBoard(
+			@RequestParam(value = "bno") int bno,
+			@RequestParam(value = "groupno") int groupno, Model model) {
+		
+		dao.deleteBoard(bno);
+		model.addAttribute("groupno", groupno);
+		
+		return "redirect:/wall";
+	}
+	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//내가 속한 그룹의 전체 게시글 출력
+	@RequestMapping(value = "/myfeed")
+	public String selectMyGroup(
+			@RequestParam(value = "memberno") int memberno, Model model) {
+		
+		//멤버 넘버 세션에서 받아오기.
+		List<BoardDTO> list = dao.selectMyFeed(memberno);
+		model.addAttribute("list", list);
+		
+		return "board/myFeed";
+	}
+	
 	
 	
 	
