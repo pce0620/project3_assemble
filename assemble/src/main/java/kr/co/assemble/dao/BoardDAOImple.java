@@ -45,9 +45,24 @@ public class BoardDAOImple implements BoardDAO{
 	@Override
 	public List<BoardDTO> selectOne(int bno) {
 		
-		List<BoardDTO> list = ss.selectOne("selectOneBno", bno);
+		List<BoardDTO> list = ss.selectList("selectOneBno", bno);
 		
 		return list;
+	}
+	
+	//myfeed 조회 (내가 속한 모든 그룹의 글 가져오기)
+	@Override
+	public List<BoardDTO> selectMyFeed(int memberno) {
+		
+		List<BoardDTO> list = ss.selectList("myGroupBoard", memberno);
+		
+		return list;
+	}
+
+	//글삭제
+	@Override
+	public void deleteBoard(int bno) {
+		ss.delete("deleteBoard", bno);
 	}
 	
 	

@@ -13,6 +13,10 @@
 	</insert>
 	
 	
+	<!-- 카테고리조회 -->
+	<select id="categoryGroup" resultType="GroupDTO">
+		select * from category
+	</select>
 	
 	
 	
@@ -65,10 +69,11 @@
 	<select id="selectGroupBoard" resultType="BoardDto">
 		select * from groupboard
 		where groupno = #{groupno}
+		order by boarddate desc;
 	</select>
 	
 	<!-- bno로 전체 조회 -->
-	<select id="selectOneBno" resultType="BoardDto">
+	<select id="selectOneBno" resultType="BoardDto" parameterType="int">
 		select * from groupboard
 		where bno = #{bno}
 	</select>
@@ -81,16 +86,26 @@
 	
 	<!-- 글 수정 -->
 	<update id="updateBoard" parameterType="BoardDto">
-		update table groupboard
+		update groupboard
 		set boardcontents = #{boardcontents}
 		where bno = #{bno}
 	</update>
+		
+	<!-- 글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from groupboard
+		where bno = #{bno}
+	</delete>
 	
 	
 	
-	
-	
-	
+	<!-- 내가 포함된 그룹의 글들만 조회 (나의 소식피드) -->
+	<select id="myGroupBoard" resultType="BoardDto">
+		select * from groupboard
+		where groupno in (select groupno
+		from composed
+		where memberno = #{memberno})
+	</select>
 	
 	
 	

@@ -10,7 +10,10 @@
 <body>
 	<h2>글쓰기 폼</h2>
 	<c:forEach var="i" items="${list }">
-	<form action="writeOk">
+	<form action="modify">
+		<input type="hidden" name="bno" value="${i.bno }"/>
+		<input type="hidden" name="groupno" value="${i.groupno }"/>
+		
 		<h2>글번호</h2>
 		<h2>${i.bno }</h2>
 		

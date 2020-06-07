@@ -17,6 +17,13 @@ public interface BoardDAO {
 	//bno로 contents 가져오기 위해 조회
 	public List<BoardDTO> selectOne(int bno);
 	
+	//글삭제
+	public void deleteBoard(int bno);
+	
+	
+	//myfeed 조회 (내가 속한 모든 그룹의 글 가져오기)
+	public List<BoardDTO> selectMyFeed(int memberno);
+	
 	
 	
 }
