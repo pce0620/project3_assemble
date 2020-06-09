@@ -9,5 +9,7 @@
 		<!-- <package name="kr.co.assemble.dto"/> -->
 		<typeAlias type="kr.co.assemble.dto.GroupDTO" alias="GroupDto"/>
 		<typeAlias type="kr.co.assemble.dto.BoardDTO" alias="BoardDto"/>
+		<typeAlias type="kr.co.assemble.dto.RecommentDTO" alias="RecommentDto"/>
+		
 	</typeAliases>
 </configuration>

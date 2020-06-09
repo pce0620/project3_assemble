@@ -38,6 +38,12 @@ public class GroupDAOImple implements GroupDAO{
 	public List<GroupDTO> selectGroup() {
 		return ss.selectList("selectAllGroup");
 	}
+
+	//카테고리별 그룹조회
+	@Override
+	public List<GroupDTO> grouplist(int categoryno) {
+		return ss.selectList("selectCategoryGroup", categoryno);
+	}
 	
 	
 	

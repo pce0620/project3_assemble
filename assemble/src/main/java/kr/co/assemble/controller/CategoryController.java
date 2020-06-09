@@ -1,5 +1,7 @@
 package kr.co.assemble.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,7 @@ public class CategoryController {
 		this.cdao = cdao;
 	}
 
-
+	//카테고리 생성폼으로
 	@RequestMapping(value = "/makeCategory")
 	public String makeCategory() {		
 		
@@ -27,6 +29,7 @@ public class CategoryController {
 	}
 	
 	
+	//카테고리 생성 OK
 	@RequestMapping(value = "/makeCategoryOk")
 	public String makecategoryOk(
 			@RequestParam(value = "cgName")String name, Model model) {
@@ -42,6 +45,51 @@ public class CategoryController {
 		model.addAttribute("dto", dto);
 		
 		return "category/inputCategoryOk";
+		
 	}
+	
+	
+	
+	//카테고리 전체 조회
+	@RequestMapping(value = "/categoryList")
+	public String categoryList(Model model) {
+		
+		List<CategoryDTO> list = cdao.selectCategory();
+		model.addAttribute("list", list);
+				
+		return "category/categoryForm";
+	}
+	
+	
+	
+	//카테고리 이름 변경
+	@RequestMapping(value = "/changeCategoryName")
+	public String changeName(
+			@RequestParam(value = "categoryno") int categoryno,
+			@RequestParam(value = "categoryname") String categoryname, Model model) {
+		System.out.println(categoryno);
+		System.out.println(categoryname);
+		
+		CategoryDTO dto = new CategoryDTO();
+		dto.setCategoryno(categoryno);
+		dto.setCategoryname(categoryname);
+		
+		cdao.updateName(dto);
+		
+		
+		return "redirect:/categoryList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

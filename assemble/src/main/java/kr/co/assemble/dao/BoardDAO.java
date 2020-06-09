@@ -26,4 +26,9 @@ public interface BoardDAO {
 	
 	
 	
+	
+	
+	
+	
+	
 }

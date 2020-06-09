@@ -12,11 +12,17 @@
 		values (#{memberno}, #{categoryname}, 1)
 	</insert>
 	
-	
 	<!-- 카테고리조회 -->
-	<select id="categoryGroup" resultType="GroupDTO">
+	<select id="categoryGroup" resultType="CategoryDto">
 		select * from category
 	</select>
+	
+	<update id="updateCategoryName" parameterType="CategoryDto">
+		update category
+		set categoryname = #{categoryname}
+		where categoryno = #{categoryno}
+	</update>
+	
 	
 	
 	
@@ -25,6 +31,12 @@
 	<!-- 그룹 전체 조회 -->
 	<select id="selectAllGroup" resultType="GroupDto">
 		select * from groups
+	</select>
+	
+	<!-- 카테고리별 그룹 조회 -->
+	<select id="selectCategoryGroup" resultType="GroupDTO">
+		select * from groups
+		where categoryno = #{categoryno}	
 	</select>
 	
 	<!-- 그룹생성시 미분류 카테고리를 1번이라고 했을때, 처음 생성그룹은 항상 카테고리 1번으로 들어감. -->
@@ -50,6 +62,8 @@
 	
 	
 	
+	
+	
 	<!-- **********************composed(멤버의 그룹정보)******************** -->
 	<!-- 그룹에 초대하기 invitation 유효성검사: category에 admin이 1이면 초대가 가능-->
 	<insert id="inviteGroupMem" parameterType="kr.co.assemble.dto.ComposedDTO">
@@ -65,11 +79,13 @@
 	
 	
 	<!-- **********************Board(게시판)******************** -->
-	<!-- 그룹별로 게시글 조회 -->
+	<!-- 그룹별로 게시글 조회 공지글일 경우(1) 제일 위로, 최신글이 제일 위에 올라오도록 정렬 -->
 	<select id="selectGroupBoard" resultType="BoardDto">
-		select * from groupboard
-		where groupno = #{groupno}
-		order by boarddate desc;
+		select * from memberinfo as m
+		join groupboard as b
+		on m.mi_memberno = b.memberno
+		where b.groupno = #{groupno}
+		order by boardnotice desc, boarddate desc
 	</select>
 	
 	<!-- bno로 전체 조회 -->
@@ -77,12 +93,6 @@
 		select * from groupboard
 		where bno = #{bno}
 	</select>
-	
-	<!-- 글쓰기 : 맨처음 글을 쓰게되면 공지사항여부X=0, 좋아요싫어요 0고정, 요청이 아닌경우0 -->
-	<insert id="writeBoard" parameterType="BoardDto">
-		insert into groupboard (groupno, categoryno, memberno, boarddate, boardcontents, boardnotice, boardlike, boardhate, requestboolean)
-		values (#{groupno}, #{categoryno}, #{memberno}, now(), #{boardcontents}, 0, 0, 0, 0)
-	</insert>
 	
 	<!-- 글 수정 -->
 	<update id="updateBoard" parameterType="BoardDto">
@@ -95,18 +105,70 @@
 	<delete id="deleteBoard" parameterType="int">
 		delete from groupboard
 		where bno = #{bno}
-	</delete>
+	</delete>	
+	
+	<!-- 글쓰기 : 맨처음 글을 쓰게되면 공지사항여부X=0, 좋아요싫어요 0고정, 요청이 아닌경우0 -->
+	<insert id="writeBoard" >
+		insert into groupboard (groupno, categoryno, memberno, boarddate, boardcontents, boardnotice, boardlike, boardhate, requestboolean, filestatus)
+		values (#{groupno}, #{categoryno}, #{memberno}, now(), #{boardcontents}, 0, 0, 0, 0, #{filestatus})
+	</insert>
 	
 	
 	
+	
+	
+	
+	
+	<!-- **********************파일******************** -->
+	
+	<!-- 파일 트리거로 들어온것중 제일 앞번호 -->
+	<select id="filenoNewly" resultType="int">
+		select bno from file order by filedate desc limit 1
+	</select>	
+	
+	<!-- 파일 업데이트 -->
+	<update id="updateFile" parameterType="kr.co.assemble.dto.FileDTO">
+		update file
+		set filename = #{filename}, filepath = #{filepath}, filedate = now()
+		where bno = #{bno}
+	</update>
+	
+	<!-- 파일 이름 출력(게시판에보이게) -->
+	<select id="selectfileOne" parameterType="int" resultType="int">
+		select filename from file
+		where bno = #{bno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- **********************피드******************** -->
 	<!-- 내가 포함된 그룹의 글들만 조회 (나의 소식피드) -->
 	<select id="myGroupBoard" resultType="BoardDto">
 		select * from groupboard
 		where groupno in (select groupno
 		from composed
 		where memberno = #{memberno})
+		order by boarddate desc
 	</select>
 	
+	
+	
+	
+	
+	
+	<!-- **********************댓글******************** -->
+	<!-- 댓글 달기(bno에) -->
+	<insert id="insertComment" parameterType="RecommentDto"> 
+		<!-- 여기서 memberno는 게시글 작성자 -->
+		<!-- aseeblemember에서 memno 가져와서 memid 뽑기 -->
+		insert into recomment (bno, groupno, categoryno, memberno, redate, reid, recontents)
+		values (#{bno}, #{groupno}, #{categoryno}, #{memberno}, now(), #{reid}, #{recontents})
+	</insert>
 	
 	
 	

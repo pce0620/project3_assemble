@@ -113,6 +113,16 @@ public class GroupController {
 	}
 	
 	
+	//카테고리별 그룹 조회 (왼쪽 네비바?)
+	@RequestMapping(value = "/categoryGroupList")
+	public String prtGroup(
+			@RequestParam(value = "categoryno") int categoryno, Model model) {
+		
+		List<GroupDTO> list = dao.grouplist(categoryno);
+		model.addAttribute("grouplist", list);
+		
+		return "redirect:/categoryList";
+	}
 	
 	
 	

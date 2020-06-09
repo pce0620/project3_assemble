@@ -29,7 +29,16 @@
 
 	<context:component-scan base-package="kr.co.assemble.dao"></context:component-scan>
 	
+	<!-- 파일업로드를 위한 bean -->
+	<!-- MultipartResolver 설정 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100000000" />
+        <property name="maxInMemorySize" value="100000000" />
+    </bean>
 	
-	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  	  <property name="dataSource" ref="dataSource" />
+	</bean>
+
 	
 </beans>
