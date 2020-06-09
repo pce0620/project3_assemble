@@ -8,7 +8,8 @@
 <title>wall.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-  	$(function(){  		
+  	$(function(){
+  		//게시글수정으로 이동
 		$(".btn").click(function(){
 			
 			var bno = this.parentNode.childNodes[1].value;		
@@ -16,6 +17,7 @@
 			document.location.href = "selectBoard?bno="+bno;
 		});
 		
+		//게시글 삭제
 		$(".delete").click(function(){
 
 			var bno = this.parentNode.childNodes[1].value;
@@ -25,19 +27,23 @@
 		});
 		
 		
+		//댓글달기
 		$(".re").click(function(){
 			
 			console.log(this.parentNode.childNodes);
 			
 			var bno = this.parentNode.childNodes[1].value;
 			var groupno = this.parentNode.childNodes[3].value;
-			var categoryyno = this.parentNode.childNodes[5].value;
+			var categoryno = this.parentNode.childNodes[5].value;
+			var memberno = this.parentNode.childNodes[7].value;
+			var contents = this.parentNode.childNodes[9].value;
 			
-			document.location.href = "deleteBoard?bno="+bno+"&groupno="+groupno+"&categoryno="+categoryno;
+			
+			document.location.href = "insertComment?bno="+bno+"&groupno="+groupno+"&categoryno="+categoryno+"&contents="+contents+"&memberno="+memberno;
 		});
-		
+				
 	}); 
- 	
+
 </script>
 </head>
 <body>
@@ -55,6 +61,8 @@
 					<th>싫어요</th>
 					<th>공지여부</th>
 					<th>요청여부</th>
+					<th>댓글달기</th>
+					<th>파일이름</th>
 				</tr>
 				<tr>
 					<td>
@@ -77,10 +85,13 @@
 						<input type="hidden" class="bno" name="bno" value="${i.bno }"/>
 						<input type="hidden" class="groupno" name="groupno" value="${i.groupno }"/>
 						<input type="hidden" class="categoryno" name="categoryno" value="${i.categoryno }"/>
+						<input type="hidden" class="memberno" name="memberno" value="${i.memberno }"/>
 						<input type="text" name="recomment" id="recomment" />
 						<input type="button" class="re" value="댓글달기" />
 					</td>
+					<td>${fileName }</td>
 				</tr>
+
 			</table>
 
 	</c:forEach>

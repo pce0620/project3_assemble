@@ -1,5 +1,7 @@
 package kr.co.assemble.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,10 +24,19 @@ public class CategoryDAOImple implements CategoryDAO {
 		ss.insert("insertCategory", dto);
 	}
 
-	//
+	//전체 카테고리 조회
 	@Override
-	public void updateOne(CategoryDTO dto) {
+	public List<CategoryDTO> selectCategory() {
 		
+		List<CategoryDTO> list = ss.selectList("categoryGroup");
+		
+		return list;
+	}
+
+	//카테고리 이름변경
+	@Override
+	public void updateName(CategoryDTO dto) {
+		ss.update("updateCategoryName", dto);
 	}
 	
 

@@ -2,6 +2,7 @@ package kr.co.assemble.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,15 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.BoardDAO;
+import kr.co.assemble.dao.FileDAO;
 import kr.co.assemble.dto.BoardDTO;
 
 @Controller
 public class BoardController {
 
 	@Autowired
+	FileDAO fdao;
+	
+	@Autowired
 	BoardDAO dao;
-	
-	
+
 	public void setDao(BoardDAO dao) {
 		this.dao = dao;
 	}
@@ -36,7 +40,8 @@ public class BoardController {
 			@RequestParam(value = "grNum") int grNum,
 			@RequestParam(value = "cgNum") int cgNum,
 			@RequestParam(value = "memNum") int memNum,
-			@RequestParam(value = "contents") String contents, Model model) {
+			@RequestParam(value = "contents") String contents,
+			@RequestParam(value = "fileStatus") int status, Model model) {
 		
 		BoardDTO dto = new BoardDTO();
 		
@@ -44,7 +49,11 @@ public class BoardController {
 		dto.setCategoryno(cgNum);
 		dto.setMemberno(memNum);
 		dto.setBoardcontents(contents);
+		dto.setFilestatus(status);
 		dao.write(dto);
+		
+		System.out.println("not file : " + status);
+		
 		model.addAttribute("contents", contents);
 		
 		return "board/wall";
@@ -98,7 +107,7 @@ public class BoardController {
 	}
 	
 	
-	//게시글 삭제
+	//게시글 삭제 - 파일이랑 연결되있으면 파일에도 bno넘겨서 삭제(트리거 걸어놓음)
 	@RequestMapping(value = "/deleteBoard")
 	public String deleteBoard(
 			@RequestParam(value = "bno") int bno,
