@@ -9,7 +9,7 @@ public interface CategoryDAO {
 	public void insertCategory(CategoryDTO dto);
 
 	//전체 카테고리 조회
-	public List<CategoryDTO> selectCategory();
+	public List<CategoryDTO> selectCategory(CategoryDTO dto);
 	
 	//카테고리 이름 변경
 	public void updateName(CategoryDTO dto);

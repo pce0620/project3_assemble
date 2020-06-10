@@ -79,6 +79,7 @@ public class FileController {
         }
         
         int bno = dao.filenewly();
+        System.out.println(bno);
         
         FileDTO fdto = new FileDTO();
         fdto.setFilename(originalFileName);
@@ -86,9 +87,7 @@ public class FileController {
         fdto.setBno(bno);
         dao.updateFile(fdto);
         
-        String name = dao.fileName(bno);
-        
-        model.addAttribute("fileName", name);
+        model.addAttribute("fileName", originalFileName);
         model.addAttribute("groupno", grNum);
         
         return "redirect:/wall";

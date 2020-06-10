@@ -54,7 +54,10 @@ public class CategoryController {
 	@RequestMapping(value = "/categoryList")
 	public String categoryList(Model model) {
 		
-		List<CategoryDTO> list = cdao.selectCategory();
+		CategoryDTO dto = new CategoryDTO();
+		dto.setAssemblename("abc");
+		
+		List<CategoryDTO> list = cdao.selectCategory(dto);
 		model.addAttribute("list", list);
 				
 		return "category/categoryForm";

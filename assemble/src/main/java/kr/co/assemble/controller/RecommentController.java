@@ -19,6 +19,7 @@ public class RecommentController {
 		return dao;
 	}
 	
+	//댓글 작성
 	@RequestMapping(value = "/insertComment")
 	public String reco(
 			@RequestParam(value = "bno") int bno,
@@ -42,6 +43,20 @@ public class RecommentController {
 		
 		return "recomment/recomment";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
