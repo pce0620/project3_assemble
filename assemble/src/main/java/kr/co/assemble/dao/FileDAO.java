@@ -1,6 +1,8 @@
 package kr.co.assemble.dao;
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,8 +26,14 @@ public class FileDAO {
 		ss.update("updateFile", dto);
 	}
 	
+	//파일 이름 하나 얻기
 	public String fileName(int bno) {
 		return ss.selectOne("selectfileOne", bno);
+	}
+	
+	//파일 리스트 출력
+	public List<FileDTO> fileList(int bno){
+		return ss.selectList("selectFileList", bno);
 	}
 	
 }

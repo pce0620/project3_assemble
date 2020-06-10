@@ -26,9 +26,9 @@ public class CategoryDAOImple implements CategoryDAO {
 
 	//전체 카테고리 조회
 	@Override
-	public List<CategoryDTO> selectCategory() {
+	public List<CategoryDTO> selectCategory(CategoryDTO dto) {
 		
-		List<CategoryDTO> list = ss.selectList("categoryGroup");
+		List<CategoryDTO> list = ss.selectList("categoryGroup", dto);
 		
 		return list;
 	}

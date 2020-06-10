@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.BoardDAO;
-import kr.co.assemble.dao.FileDAO;
 import kr.co.assemble.dto.BoardDTO;
+import kr.co.assemble.dto.Groupboard_Memberinfo_FileDTO;
 
 @Controller
 public class BoardController {
 
-	@Autowired
-	FileDAO fdao;
-	
+
 	@Autowired
 	BoardDAO dao;
 
@@ -65,8 +63,8 @@ public class BoardController {
 	public String boardlist(
 			@RequestParam(value = "groupno") int groupno, Model model){
 		
-		List<BoardDTO> list = dao.boardlist(groupno);
-
+		List<Groupboard_Memberinfo_FileDTO>list = dao.boardlist(groupno);
+			
 		model.addAttribute("list", list);
 		
 		return "board/wall";
@@ -134,10 +132,7 @@ public class BoardController {
 		
 		return "board/myFeed";
 	}
-	
-	
-	
-	
+
 	
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.assemble.dto.BoardDTO;
+import kr.co.assemble.dto.Groupboard_Memberinfo_FileDTO;
 
 @Repository
 public class BoardDAOImple implements BoardDAO{
@@ -18,21 +19,11 @@ public class BoardDAOImple implements BoardDAO{
 	public void setSs(SqlSession ss) {
 		this.ss = ss;
 	}
-	
 
 	//글쓰기
 	@Override
 	public void write(BoardDTO dto) {
 		ss.insert("writeBoard", dto);
-	}
-	
-	//그룹별 전체조회
-	@Override
-	public List<BoardDTO> boardlist(int groupno) {
-		
-		List<BoardDTO> list = ss.selectList("selectGroupBoard", groupno);
-		
-		return list;
 	}
 
 	//글 수정
@@ -66,9 +57,20 @@ public class BoardDAOImple implements BoardDAO{
 	}
 	
 	
-	
-	
-	
+	// 그룹별 글 출력
+	@Override
+	public List<Groupboard_Memberinfo_FileDTO> boardlist(int groupno) {
+		
+		List<Groupboard_Memberinfo_FileDTO> list = ss.selectList("selectGroupBoard", groupno);
+
+		return list;
+	}
+
+	//요청 글쓰기
+	@Override
+	public void insertRequest(BoardDTO dto) {
+		ss.insert("insertRequest", dto);
+	}
 	
 	
 	
