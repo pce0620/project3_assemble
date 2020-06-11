@@ -86,7 +86,7 @@
 		m.mi_memname, m.mi_memid, b.memberno, 
 		b.bno, b.groupno, c.categoryno, b.boardnotice, 
 		b.boarddate, b.boardcontents, b.boardlike, b.boardhate, 
-		b.requestboolean, f.filename, r.reqstatus
+		b.requestboolean, f.filename, f.filepath, r.reqstatus
 		from category as c, memberinfo as m, groupboard as b
 		left outer join file f
 		on f.bno = b.bno
@@ -180,8 +180,12 @@
 		where bno = #{bno}
 	</select>
 	
-	
-	
+	<!-- 파일 수정 -->
+	<update id="changeFile" parameterType="FileDto">
+		update file
+		set filename = #{filename}, filedate = now()
+		where bno = #{bno}
+	</update>
 	
 	
 	
@@ -216,7 +220,71 @@
 	
 	
 	
+	<!-- 그룹에서 멤버만 select -->
+	<select id="selectGroupMember" parameterType="CMI_Dto" resultType="CMI_Dto">
+		select m.mi_memid, m.mi_memname
+		from memberinfo m, composed c
+		where c.memberno = m.mi_memberno
+		and groupno = #{groupno}
+	</select>
 	
+	<!-- 사진만 select -->
+	<select id="selectGroupImg" parameterType="CF_Dto" resultType="CF_Dto">
+		select g.bno, f.filename, f.filepath
+		from groupboard g inner join file f
+		on f.bno = g.bno
+		where 
+		(f.filename like '%.jpg' or f.filename like '%.gif' or f.filename like '%.png')
+		and groupno = ${groupno}
+	</select>
+	
+	<!-- 위에 조건준것 제외한 모든 파일 select -->
+	<select id="selectGroupFileName" parameterType="CF_Dto" resultType="CF_Dto">
+		select g.bno, f.filename, f.filepath
+		from groupboard g inner join file f
+		on f.bno = g.bno
+		where not f.filename like '%.jpg' and not f.filename like '%.gif' and not f.filename like '%.png'
+		and groupno = #{groupno};
+	</select>
+	
+	<!-- 그룹보드에 요청여부가 1일때 -->
+	<select id="selectGroupReq" parameterType="GMF_Dto" resultType="GMF_Dto">
+		select
+		m.mi_memname, m.mi_memid, b.memberno, 
+		b.bno, b.groupno, c.categoryno, b.boardnotice, 
+		b.boarddate, b.boardcontents, b.boardlike, b.boardhate, 
+		b.requestboolean, f.filename, f.filepath, r.reqstatus
+		from category as c, memberinfo as m, groupboard as b
+		left outer join file f
+		on f.bno = b.bno
+		left outer join requestboard r
+		on r.bno = b.bno
+		where
+		b.categoryno = c.categoryno and
+		m.mi_memberno = b.memberno and
+		b.requestboolean = 1 and
+		b.groupno = #{groupno};
+	</select>
+	
+	<!-- 요청 진행상황 별로 조회 -->
+	<select id="selectGroupReqStatus" parameterType="GMF_Dto" resultType="GMF_Dto">
+		select
+		m.mi_memname, m.mi_memid, b.memberno, 
+		b.bno, b.groupno, c.categoryno, b.boardnotice, 
+		b.boarddate, b.boardcontents, b.boardlike, b.boardhate, 
+		b.requestboolean, f.filename, r.reqstatus
+		from category as c, memberinfo as m, groupboard as b
+		left outer join file f
+		on f.bno = b.bno
+		left outer join requestboard r
+		on r.bno = b.bno
+		where
+		b.categoryno = c.categoryno and
+		m.mi_memberno = b.memberno and
+		b.requestboolean = 1 and
+		r.reqstatus = #{reqstatus} and
+		b.groupno = #{groupno}
+	</select>
 	
 	
 	

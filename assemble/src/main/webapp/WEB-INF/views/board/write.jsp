@@ -9,18 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-			
-		/* 	$('form[name="frm"]').submit(function(){
-				if($("#uploadFile").val()==null){
-					console.log("not file");
-					document.frm.action = "/writeOk"; 
-				}else{
-					console.log("file in");
-					document.frm.action = "/upload"; 						
-				};
-			});
-	 */
-	 
+		 
 	 	$("#btn").click(function(){
 	 		var data = $("#uploadFile").val(); 		
 	 		
@@ -60,7 +49,7 @@
 		
 		<h2>파일 업로드</h2>
 		<input type="hidden" id="fileStatus" name="fileStatus" value="0" />
-		<input type="file" id="uploadFile" name="uploadFile" />
+		<input type="file" id="uploadFile" name="uploadFile"/>
 		
 		<input type="button" id="btn" value="등록" />
 	</form>

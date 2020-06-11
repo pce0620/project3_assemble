@@ -17,6 +17,7 @@
 		<h2>글번호</h2>
 		<h2>${i.bno }</h2>
 		
+		
 		<h2>글내용</h2>
 		<input type="text" name="contents" id="contents" value="${i.boardcontents }"/>
 		<input type="submit" value="등록" />

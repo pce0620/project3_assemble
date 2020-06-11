@@ -41,6 +41,9 @@ public class ComposedController {
 		
 		return "composed/inviteOk";
 	}
+
+	
+	
 	
 	
 	

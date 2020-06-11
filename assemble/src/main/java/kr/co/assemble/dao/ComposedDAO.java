@@ -18,4 +18,12 @@ public class ComposedDAO {
 		ss.insert("inviteGroupMem", dto);
 	}
 	
+	
+
+	
+	
+	
+	
+	
+	
 }

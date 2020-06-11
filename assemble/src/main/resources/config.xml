@@ -14,5 +14,8 @@
 		<typeAlias type="kr.co.assemble.dto.Groupboard_Memberinfo_FileDTO" alias="GMF_Dto"/>
 		<typeAlias type="kr.co.assemble.dto.RequestDTO" alias="ReqDto"/>
 		
+		<typeAlias type="kr.co.assemble.dto.ComposedMemberInfoDTO" alias="CMI_Dto"/>
+		<typeAlias type="kr.co.assemble.dto.GroupFileDTO" alias="CF_Dto"/>
+		
 	</typeAliases>
 </configuration>

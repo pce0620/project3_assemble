@@ -1,9 +1,20 @@
 package kr.co.assemble.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +22,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import kr.co.assemble.dao.BoardDAO;
 import kr.co.assemble.dao.FileDAO;
@@ -31,6 +47,8 @@ public class FileController {
 	
 	@Autowired
 	PlatformTransactionManager transactionManager;
+	
+	
 	
 	@PostMapping("/upload")
     public String upload(
@@ -93,4 +111,46 @@ public class FileController {
         return "redirect:/wall";
 	}
 
+	
+	
+	//파일 다운로드
+	@RequestMapping(value = "download")
+	public void download(HttpServletRequest request, HttpServletResponse response){
+		
+        String filename = request.getParameter("fileName");
+//      String downname = System.currentTimeMillis() + filename;
+        String realPath = request.getSession().getServletContext().getRealPath("/")+"resources/uploadFiles/";
+        System.out.println(realPath);
+
+
+		String fileName = filename;
+		
+
+		response.setContentType("application/octet-stream");		
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\";");
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "-1");
+		
+		
+		try (
+			FileInputStream fis = new FileInputStream(fileName);
+			OutputStream out = response.getOutputStream();
+		){
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+		    while((readCount = fis.read(buffer)) != -1)
+		    out.write(buffer,0,readCount);
+		    
+		} catch (Exception e) {
+		   	// TODO Auto-generated catch block
+		 	e.printStackTrace();
+		}
+	}
 }
+
+
+	
+	
+	
+	
