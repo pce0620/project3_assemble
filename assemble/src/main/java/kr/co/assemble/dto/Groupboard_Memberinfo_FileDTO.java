@@ -13,6 +13,7 @@ public class Groupboard_Memberinfo_FileDTO {
 	private int boardhate;
 	private int requestboolean;
 	private int boardnotice;
+	private String filepath;
 	private String fileName;
 	private int reqstatus;
 	
@@ -20,7 +21,7 @@ public class Groupboard_Memberinfo_FileDTO {
 
 	public Groupboard_Memberinfo_FileDTO(int memberno, String mi_memname, String mi_memid, int bno, int groupno,
 			int categoryno, String boarddate, String boardcontents, int boardlike, int boardhate, int requestboolean,
-			int boardnotice, String fileName, int reqstatus) {
+			int boardnotice, String filepath, String fileName, int reqstatus) {
 		super();
 		this.memberno = memberno;
 		this.mi_memname = mi_memname;
@@ -34,6 +35,7 @@ public class Groupboard_Memberinfo_FileDTO {
 		this.boardhate = boardhate;
 		this.requestboolean = requestboolean;
 		this.boardnotice = boardnotice;
+		this.filepath = filepath;
 		this.fileName = fileName;
 		this.reqstatus = reqstatus;
 	}
@@ -134,6 +136,14 @@ public class Groupboard_Memberinfo_FileDTO {
 		this.boardnotice = boardnotice;
 	}
 
+	public String getFilepath() {
+		return filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -149,8 +159,7 @@ public class Groupboard_Memberinfo_FileDTO {
 	public void setReqstatus(int reqstatus) {
 		this.reqstatus = reqstatus;
 	}
-	
-	
+
 	
 	
 	

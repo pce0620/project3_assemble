@@ -36,4 +36,9 @@ public class FileDAO {
 		return ss.selectList("selectFileList", bno);
 	}
 	
+	//파일 수정
+	public void changeFile(FileDTO dto) {
+		ss.update("changeFile", dto);
+	}
+	
 }

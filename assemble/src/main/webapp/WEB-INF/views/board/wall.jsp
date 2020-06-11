@@ -42,24 +42,7 @@
 			document.location.href = "insertComment?bno="+bno+"&groupno="+groupno+"&categoryno="+categoryno+"&contents="+contents+"&memberno="+memberno;
 		});
 		
-		
-		/* $("#status_0", "#status_1", "#status_2").click(function(){
-			console.log("click");
-			var status = 0;
-			var bno = this.parentNode.childNodes[1].value;
-			if(this.id == "#status_0"){
-				document.location.href = "updateStatus?status="+status+"&bno="+bno;							
-			}else if(this.id == "status_1"){
-				status = 1;
-				document.location.href = "updateStatus?status="+status+"&bno="+bno;											
-			}else if(this.id == "status_2"){
-				status = 2;
-				document.location.href = "updateStatus?status="+status+"&bno="+bno;															
-			}
-			
-		}); */
-		
-		
+		//요청 버튼
 		$(".status_0").click(function(){
 			var status = 0;
 			var bno = this.parentNode.childNodes[1].value;
@@ -85,8 +68,20 @@
 			document.location.href = "updateStatus?status="+status+"&bno="+bno+"&groupno="+groupno;
 		});
 		
-	}); 
+		
+		//파일 다운로드처리
+		 $(".fileName").click(function(){
+			console.log(this.parentNode.childNodes);
+			var filename = this.parentNode.childNodes[1].value;
+			var url = "download?fileName=" + encodeURIComponent(filename); 
+			
+			document.location.href = url;
+			
+		});
+		
 
+	});
+		
 </script>
 </head>
 <body>
@@ -126,7 +121,9 @@
 					<td>${i.boardlike }</td>
 					<td>${i.boardhate }</td>
 					<td>${i.requestboolean }</td>
-					<td>${i.fileName }</td>
+					<td>
+						<input type="button" value="${i.fileName }" class="fileName">
+					</td>
 					<td>
 						<input type="hidden" class="bno" name="bno" value="${i.bno }"/>
 						<input type="hidden" class="groupno" name="groupno" value="${i.groupno }"/>
