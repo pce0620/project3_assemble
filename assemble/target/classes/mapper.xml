@@ -14,8 +14,11 @@
 	
 	<!-- 카테고리조회 -->
 	<select id="categoryGroup" resultType="CategoryDTO" parameterType="CategoryDto">
-		select * from category
-		where assemblename = #{assemblename}	
+		select distinct ca.categoryno, ca.categoryname, ca.assemblename
+		on co.memberno = ca.memberno
+		where co.memberno = #{memberno}
+		<!-- select * from category
+		where assemblename = #{assemblename}	 -->
 	</select>
 	
 	<update id="updateCategoryName" parameterType="CategoryDto">

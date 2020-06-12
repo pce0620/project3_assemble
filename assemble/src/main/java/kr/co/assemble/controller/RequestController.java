@@ -47,6 +47,7 @@ public class RequestController {
 		dto.setCategoryno(cgNum);
 		dto.setMemberno(memNum);
 		dto.setBoardcontents(contents);
+		dto.setRequestboolean(1);
 
 		dao.insertRequest(dto);
 
@@ -88,6 +89,7 @@ public class RequestController {
 	
 	
 	
+	//내가 받은 요청만 출력
 	
 	
 	

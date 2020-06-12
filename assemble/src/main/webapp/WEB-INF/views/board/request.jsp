@@ -5,9 +5,33 @@
 <head>
 <meta charset="UTF-8">
 <title>request.jsp</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		 
+	 	$("#btn").click(function(){
+	 		var data = $("#uploadFile").val(); 		
+	 		
+	 		if(data==""){
+	 			console.log("not file");	 	
+	 			document.frm.action = "/requestOk";
+	 			document.frm.method = "post";
+	 			document.frm.submit();
+	 		}else{
+	 			console.log("file in");
+	 			document.frm.action = "/requestFileOk";
+	 			document.frm.method = "post";
+	 			document.frm.submit();
+	 		} 		
+	 		
+	 	});
+	 
+	});
+
+</script>
 </head>
 <body>
-	<form action="requestOk" method="post">
+	<form name="frm" enctype="multipart/form-data">
 		<h2>카테고리 번호</h2>
 		<input type="text" name="cgNum" id="cgNum" />
 		
@@ -23,7 +47,11 @@
 		<h2>글내용</h2>
 		<input type="text" name="contents" id="contents" />
 		
-		<input type="submit" value="입력" />
+		<h2>파일 업로드</h2>
+		<input type="hidden" id="fileStatus" name="fileStatus" value="0" />
+		<input type="file" id="uploadFile" name="uploadFile"/>
+		
+		<input type="button" id="btn" value="등록" />
 	</form>
 
 </body>

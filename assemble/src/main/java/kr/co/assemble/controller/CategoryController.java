@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.CategoryDAO;
+import kr.co.assemble.dto.CategoryComposedDTO;
 import kr.co.assemble.dto.CategoryDTO;
 
 @Controller
@@ -54,10 +55,12 @@ public class CategoryController {
 	@RequestMapping(value = "/categoryList")
 	public String categoryList(Model model) {
 		
-		CategoryDTO dto = new CategoryDTO();
+		CategoryComposedDTO dto = new CategoryComposedDTO();
+		//세션값
+		dto.setMemberno(1);
 		dto.setAssemblename("abc");
 		
-		List<CategoryDTO> list = cdao.selectCategory(dto);
+		List<CategoryComposedDTO> list = cdao.selectCategory(dto);
 		model.addAttribute("list", list);
 				
 		return "category/categoryForm";
