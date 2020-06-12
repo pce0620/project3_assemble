@@ -51,10 +51,10 @@ public class BoardController {
 		dao.write(dto);
 		
 		System.out.println("not file : " + status);
-		
+		model.addAttribute("groupno", grNum);
 		model.addAttribute("contents", contents);
 		
-		return "board/wall";
+		return "redirect:/wall";
 	}
 	
 	
