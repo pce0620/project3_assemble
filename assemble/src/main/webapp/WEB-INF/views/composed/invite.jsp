@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h2>inviteMember.jsp</h2>
-	<form action="inviteOk">
+	<form action="attendOk">
 		<h2>초대할 카테고리번호</h2>
 		<input type="text" name="cgNum" id="cgNum" />
 		

@@ -16,15 +16,15 @@ public class ComposedController {
 	ComposedDAO dao;
 	
 	
-	//초대 폼
-	@RequestMapping(value = "/invite")
+	//참여 폼
+	@RequestMapping(value = "/attend")
 	public String inviteMem() {
 		return "composed/invite";
 	}
 	
 	
-	//초대 완료페이지로 이동
-	@RequestMapping(value = "/inviteOk")
+	//속해있지않다면 참여가되고 속해있다면 나가기가됨
+	@RequestMapping(value = "/attendOk")
 	public String inviteMemOk(
 			@RequestParam(value = "cgNum") int cgNum,
 			@RequestParam(value = "grNum") int grNum,
@@ -36,7 +36,15 @@ public class ComposedController {
 		dto.setGroupno(grNum);
 		dto.setMemberno(memNum);
 		
-		dao.insertMem(dto);
+		int n = dao.composedGroup(dto);
+		System.out.println(n);
+		
+		if(n == 0) {
+			dao.attendGroup(dto);			
+		}else if(n == 1) {
+			dao.deleteGroup(dto);
+		}
+		
 		model.addAttribute("dto", dto);
 		
 		return "composed/inviteOk";
