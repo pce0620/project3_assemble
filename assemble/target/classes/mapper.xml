@@ -154,6 +154,18 @@
 		where bno = #{bno}
 	</update>
 	
+	<!-- 내가 받은 요청 리스트 (내 이름, 내 아이디로 요청이들어온것) -->
+	<select id="myReq" parameterType="MRG_Dto" resultType="MRG_Dto">
+		select r.bno, r.memberno, r.reqstatus, r.responseid, 
+		g.boardcontents, g.boarddate, g.boardlike, g.boardhate, f.filename
+		from memberinfo as m, requestboard as r, groupboard as g
+		left outer join file f
+		on f.bno = g.bno
+		where r.bno = g.bno
+		and (m.mi_memname = r.responseid or m.mi_memid = r.responseid)
+		and m.mi_memberno = #{memberno}
+	</select>
+	
 	
 	
 	
@@ -292,7 +304,22 @@
 	
 	
 	
+	<!-- *******************북마크************************ -->
+	<!-- 북마크 테이블에 존재하는 데이터인지 확인 -->
+	<select id="existsMark" parameterType="MarkDto" resultType="int">
+		select exists (select * from bookmark where bno = #{bno} and 
+		groupno = #{groupno} and memberno = #{memberno} and mark_memno = #{mark_memno}) as success
+	</select>
 	
+	<insert id="bookmark" parameterType="MarkDto">
+		insert into bookmark
+		values (#{bno}, #{groupno}, #{memberno}, #{mark_memno})
+	</insert>
+	
+	<delete id="deleteMark" parameterType="MarkDto">
+		delete from bookmark
+		where bno = #{bno} and groupno = #{groupno} and memberno = #{memberno} and mark_memno = #{mark_memno}
+	</delete>
 	
 	
 	

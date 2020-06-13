@@ -1,5 +1,7 @@
 package kr.co.assemble.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.BoardDAO;
+import kr.co.assemble.dao.MemReqGroupDAO;
 import kr.co.assemble.dao.RequestDAO;
 import kr.co.assemble.dto.BoardDTO;
+import kr.co.assemble.dto.MemReqGroupDTO;
 import kr.co.assemble.dto.RequestDTO;
 
 @Controller
@@ -24,6 +28,9 @@ public class RequestController {
 	@Autowired
 	BoardDAO dao;
 
+	@Autowired
+	MemReqGroupDAO mrgDao;
+	
 	@Autowired
 	PlatformTransactionManager transactionManager;
 	
@@ -90,7 +97,18 @@ public class RequestController {
 	
 	
 	//내가 받은 요청만 출력
-	
+	@RequestMapping(value = "/myRequest")
+	public String myreq(
+			@RequestParam(value = "memberno") int memberno, Model model) {
+		//memberno는 세션의 값
+		MemReqGroupDTO dto = new MemReqGroupDTO();
+		dto.setMemberno(memberno);
+		List<MemReqGroupDTO> list = mrgDao.myReq(dto);
+		
+		model.addAttribute("list", list);
+		
+		return "board/myRequest";
+	}
 	
 	
 	

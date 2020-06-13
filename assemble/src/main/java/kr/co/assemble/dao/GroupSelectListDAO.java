@@ -16,7 +16,12 @@ public class GroupSelectListDAO {
 	@Autowired
 	SqlSession ss;
 	
-	
+
+	public void setSs(SqlSession ss) {
+		this.ss = ss;
+	}
+
+
 	//그룹에 속한 멤버 List (membername, id)
 	public List<ComposedMemberInfoDTO> groupMemList(ComposedMemberInfoDTO dto){
 		
