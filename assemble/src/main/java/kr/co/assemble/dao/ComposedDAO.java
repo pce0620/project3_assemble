@@ -16,12 +16,21 @@ public class ComposedDAO {
 	public void setSs(SqlSession ss) {
 		this.ss = ss;
 	}
-	//그룹초대 - 유효성검사로 category admin 컬럼이 1인 경우만 가능
-	public void insertMem(ComposedDTO dto) {
-		ss.insert("inviteGroupMem", dto);
+	
+	//그룹에 속해있나 여부 판단
+	public int composedGroup(ComposedDTO dto) {
+		return ss.selectOne("existsGroup", dto);
 	}
 	
+	//그룹참여
+	public void attendGroup(ComposedDTO dto) {
+		ss.insert("attend", dto);
+	}
 	
+	//그룹에서 빠지기
+	public void deleteGroup(ComposedDTO dto) {
+		ss.delete("deleteComposed", dto);
+	}
 
 	
 	

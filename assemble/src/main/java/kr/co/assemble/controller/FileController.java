@@ -74,8 +74,9 @@ public class FileController {
 		String root_filePath = request.getSession().getServletContext().getRealPath("/");
         String attach_path = "resources/uploadFiles/";
 		String originalFileName = mf.getOriginalFilename();
+		String time = Long.toString(System.currentTimeMillis());
+	    String safeFile = root_filePath + attach_path + time + originalFileName;
         
-        String safeFile = root_filePath + attach_path + originalFileName;
         
         //파일 다운로드할 때
         //System.currentTimeMillis() + originalFileName
@@ -93,7 +94,7 @@ public class FileController {
         System.out.println(bno);
         
         FileDTO fdto = new FileDTO();
-        fdto.setFilename(originalFileName);
+        fdto.setFilename(time + originalFileName);
         fdto.setFilepath(root_filePath+attach_path);
         fdto.setBno(bno);
         dao.updateFile(fdto);
@@ -140,8 +141,8 @@ public class FileController {
 		String root_filePath = request.getSession().getServletContext().getRealPath("/");
         String attach_path = "resources/uploadFiles/";
 		String originalFileName = mf.getOriginalFilename();
-        
-        String safeFile = root_filePath + attach_path + originalFileName;
+		String time = Long.toString(System.currentTimeMillis());
+	    String safeFile = root_filePath + attach_path + time + originalFileName;
         
         //파일 다운로드할 때
         //System.currentTimeMillis() + originalFileName
@@ -159,7 +160,7 @@ public class FileController {
         System.out.println(bno);
         
         FileDTO fdto = new FileDTO();
-        fdto.setFilename(originalFileName);
+        fdto.setFilename(time + originalFileName);
         fdto.setFilepath(root_filePath+attach_path);
         fdto.setBno(bno);
         dao.updateFile(fdto);
@@ -202,7 +203,7 @@ public class FileController {
 		
 		
 		try (
-			FileInputStream fis = new FileInputStream(fileName);
+			FileInputStream fis = new FileInputStream(realPath+fileName);
 			OutputStream out = response.getOutputStream();
 		){
 			int readCount = 0;

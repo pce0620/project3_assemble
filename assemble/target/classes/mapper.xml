@@ -15,11 +15,14 @@
 	<!-- 카테고리조회 -->
 	<select id="categoryGroup" resultType="CategoryDTO" parameterType="CategoryDto">
 		select distinct ca.categoryno, ca.categoryname, ca.assemblename
-		on co.memberno = ca.memberno
-		where co.memberno = #{memberno}
-		<!-- select * from category
-		where assemblename = #{assemblename}	 -->
+	    from category ca inner join composed co
+	    on co.memberno = ca.memberno
+	    where co.memberno = #{memberno} or 
+	    ca.assemblename=#{assemblename} and 
+	    ca.publicsecret = 1;
 	</select>
+	
+	
 	
 	<update id="updateCategoryName" parameterType="CategoryDto">
 		update category
@@ -69,11 +72,24 @@
 	
 	
 	<!-- **********************composed(멤버의 그룹정보)******************** -->
-	<!-- 그룹에 초대하기 invitation 유효성검사: category에 admin이 1이면 초대가 가능-->
-	<insert id="inviteGroupMem" parameterType="kr.co.assemble.dto.ComposedDTO">
+	<!-- 그룹에 내가 속해있는지 여부 -->
+	<select id="existsGroup" resultType="int" parameterType="ComposedDto">
+		select exists (select * from composed where categoryno = #{categoryno} and groupno = #{groupno}
+		and memberno = #{memberno}) as success
+	</select>
+	
+	<!-- 그룹에 참여하기-->
+	<insert id="attend" parameterType="ComposedDto">
 		insert into composed
 		values (#{groupno}, #{categoryno}, #{memberno})
 	</insert>
+	
+	<!-- 그룹에 참여가 되어있다면 삭제되게 -->
+	<delete id="deleteComposed" parameterType="ComposedDto">
+		delete from composed
+		where categoryno = #{categoryno} and groupno = #{groupno}
+		and memberno = #{memberno}
+	</delete>
 	
 	
 	
