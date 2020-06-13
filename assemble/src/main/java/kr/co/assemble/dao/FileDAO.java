@@ -15,6 +15,11 @@ public class FileDAO {
 	@Autowired
 	SqlSession ss;
 	
+	
+
+	public SqlSession getSs() {
+		return ss;
+	}
 
 	//파일 최신 번호 가져오기
 	public int filenewly() {

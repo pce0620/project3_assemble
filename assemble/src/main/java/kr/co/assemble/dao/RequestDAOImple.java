@@ -12,6 +12,12 @@ public class RequestDAOImple implements RequestDAO {
 	@Autowired
 	SqlSession ss;
 	
+	
+	
+	public void setSs(SqlSession ss) {
+		this.ss = ss;
+	}
+
 	//자동으로 bno가 추가되어있는 요청테이블에 바로 요청 받는 사람 업데이트
 	@Override
 	public void updateReq(RequestDTO dto) {

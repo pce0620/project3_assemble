@@ -15,6 +15,10 @@ public class GroupDAOImple implements GroupDAO{
 	SqlSession ss;
 	
 	
+	public void setSs(SqlSession ss) {
+		this.ss = ss;
+	}
+
 	//그룹 생성 - 생성과 동시에 무조건 미분류그룹(카테고리1번)으로 들어감
 	@Override
 	public void insertGroup(GroupDTO dto) {

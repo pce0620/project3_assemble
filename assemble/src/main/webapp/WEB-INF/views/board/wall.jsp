@@ -79,6 +79,17 @@
 			
 		});
 		
+		
+		//북마크
+		$(".mark").click(function(){
+			var bno = this.parentNode.childNodes[1].value;
+			var groupno = this.parentNode.childNodes[3].value;
+			var memberno = this.parentNode.childNodes[5].value;
+			
+			document.location.href = "bookMark?bno="+bno+"&groupno="+groupno+"&memberno="+memberno;
+			
+		});
+		
 
 	});
 		
@@ -103,6 +114,7 @@
 					<th>댓글달기</th>
 					<th>요청 status</th>
 					<th>요청 상태 변경</th>
+					<th>북마크</th>
 			</tr>
 				<tr>
 					<td>${i.memberno }</td>
@@ -139,6 +151,12 @@
 						<input type="button" class="status_0" value="요청" />
 						<input type="button" class="status_1" value="진행중" />
 						<input type="button" class="status_2" value="완료" />
+					</td>
+					<td>
+						<input type="hidden" class="bno" name="bno" value="${i.bno }"/>
+						<input type="hidden" class="groupno" name="groupno" value="${i.groupno }"/>
+						<input type="hidden" class="memberno" name="memberno" value="${i.memberno }"/>
+						<input type="button" class="mark" value="북마크" />
 					</td>
 				</tr>
 
