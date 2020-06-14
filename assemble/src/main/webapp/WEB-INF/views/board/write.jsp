@@ -34,9 +34,7 @@
 
 	<h2>글쓰기 폼</h2>
 	<form name="frm" enctype="multipart/form-data">
-		<h2>카테고리 번호</h2>
-		<input type="text" name="cgNum" id="cgNum" />
-		
+
 		<h2>그룹 번호</h2>
 		<input type="text" name="grNum" id="grNum" />
 		

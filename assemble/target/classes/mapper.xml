@@ -103,16 +103,15 @@
    <select id="selectGroupBoard" resultType="GMF_Dto">
       	select
 		m.mi_memname, m.mi_memid, b.memberno, 
-		b.bno, b.groupno, c.categoryno, b.boardnotice, 
+		b.bno, b.groupno, b.boardnotice, 
 		b.boarddate, b.boardcontents, b.boardlike, b.boardhate, 
 		b.requestboolean, f.filename, f.filepath, r.reqstatus
-		from category as c, memberinfo as m, groupboard as b
+		from memberinfo as m, groupboard as b
 		left outer join file f
 		on f.bno = b.bno
 		left outer join requestboard r
 		on r.bno = b.bno
 		where
-		b.categoryno = c.categoryno and
 		m.mi_memberno = b.memberno and
 		b.groupno = #{groupno}
    </select>
@@ -138,9 +137,31 @@
 	
 	<!-- 글쓰기 : 맨처음 글을 쓰게되면 공지사항여부X=0, 좋아요싫어요 0고정, 요청이 아닌경우0 -->
 	<insert id="writeBoard" >
-		insert into groupboard (groupno, categoryno, memberno, boarddate, boardcontents, boardnotice, boardlike, boardhate, requestboolean, filestatus)
-		values (#{groupno}, #{categoryno}, #{memberno}, now(), #{boardcontents}, 0, 0, 0, 0, #{filestatus})
+		insert into groupboard (groupno, memberno, boarddate, boardcontents, boardnotice, boardlike, boardhate, requestboolean, filestatus)
+		values (#{groupno}, #{memberno}, now(), #{boardcontents}, 0, 0, 0, 0, #{filestatus})
 	</insert>
+	
+	<!-- 내가 쓴 글만 조회 -->
+	<select id="myWrite" parameterType="MyWriteDto" resultType="MyWriteDto">
+		select
+		m.mi_memname, m.mi_memid, b.memberno,
+		b.bno, b.groupno, g.groupname, b.boardnotice,
+		b.boarddate, b.boardcontents, b.boardlike, b.boardhate,
+		b.requestboolean, f.filename, r.reqstatus
+		from memberinfo as m, groups g, groupboard as b
+		left outer join file f
+		on f.bno = b.bno
+		left outer join requestboard r
+		on r.bno = b.bno
+		where
+		g.groupno= b.groupno and
+		m.mi_memberno = b.memberno and
+		b.memberno = #{memberno};
+	</select>
+	
+	
+	
+	
 	
 	
 	
@@ -149,8 +170,8 @@
 	<!-- *******************요청******************** -->
 	<!-- 요청 탭에서 쓰기위해서 요청여부 insert -->
 	<insert id="insertRequest">
-		insert into groupboard (groupno, categoryno, memberno, boarddate, boardcontents, boardnotice, boardlike, boardhate, requestboolean, filestatus)
-		values (#{groupno}, #{categoryno}, #{memberno}, now(), #{boardcontents}, 0, 0, 0, 1, #{filestatus})
+		insert into groupboard (groupno, memberno, boarddate, boardcontents, boardnotice, boardlike, boardhate, requestboolean, filestatus)
+		values (#{groupno}, #{memberno}, now(), #{boardcontents}, 0, 0, 0, 1, #{filestatus})
 	</insert>
 	
 	<!-- 요청 제일 앞번호 가져오기 -->
@@ -224,7 +245,7 @@
 	<!-- **********************피드******************** -->
 	<!-- 내가 포함된 그룹의 글들만 조회 (나의 소식피드) -->
 	<select id="myGroupBoard" resultType="GMF_Dto">
-		select  g.groupname, m.mi_memname, m.mi_memid, gb.memberno, gb.boardnotice, gb.boarddate, gb.boardcontents, gb.boardlike, gb.boardhate, gb.requestboolean, f.filename
+		select  g.groupname, m.mi_memname, m.mi_memid, gb.memberno, gb.boardnotice, gb.boarddate, gb.boardcontents, gb.boardlike, gb.boardhate, gb.requestboolean, f.filename, r.responseid, r.reqstatus
 		from groupboard as gb
 		join groups as g
 		on gb.groupno = g.groupno
@@ -232,8 +253,10 @@
 		on gb.memberno = m.mi_memberno
 		left join file as f
 		on f.bno = gb.bno
+		left join requestboard as r
+		on r.bno = gb.bno
 		where gb.groupno in (select groupno from composed where memberno = #{memberno}) 
-		order by boarddate desc;
+		order by boarddate desc
 	</select>
 	
 	
@@ -243,8 +266,8 @@
 	<insert id="insertComment" parameterType="RecommentDto"> 
 		<!-- 여기서 memberno는 게시글 작성자 -->
 		<!-- aseeblemember에서 memno 가져와서 memid 뽑기 -->
-		insert into recomment (bno, groupno, categoryno, memberno, redate, reid, recontents)
-		values (#{bno}, #{groupno}, #{categoryno}, #{memberno}, now(), #{reid}, #{recontents})
+		insert into recomment (bno, groupno, memberno, redate, reid, recontents)
+		values (#{bno}, #{groupno}, #{memberno}, now(), #{reid}, #{recontents})
 	</insert>
 
 	
@@ -282,16 +305,15 @@
 	<select id="selectGroupReq" parameterType="GMF_Dto" resultType="GMF_Dto">
 		select
 		m.mi_memname, m.mi_memid, b.memberno, 
-		b.bno, b.groupno, c.categoryno, b.boardnotice, 
+		b.bno, b.groupno, b.boardnotice, 
 		b.boarddate, b.boardcontents, b.boardlike, b.boardhate, 
 		b.requestboolean, f.filename, f.filepath, r.reqstatus
-		from category as c, memberinfo as m, groupboard as b
+		from memberinfo as m, groupboard as b
 		left outer join file f
 		on f.bno = b.bno
 		left outer join requestboard r
 		on r.bno = b.bno
 		where
-		b.categoryno = c.categoryno and
 		m.mi_memberno = b.memberno and
 		b.requestboolean = 1 and
 		b.groupno = #{groupno};
@@ -301,16 +323,15 @@
 	<select id="selectGroupReqStatus" parameterType="GMF_Dto" resultType="GMF_Dto">
 		select
 		m.mi_memname, m.mi_memid, b.memberno, 
-		b.bno, b.groupno, c.categoryno, b.boardnotice, 
+		b.bno, b.groupno, b.boardnotice, 
 		b.boarddate, b.boardcontents, b.boardlike, b.boardhate, 
 		b.requestboolean, f.filename, r.reqstatus
-		from category as c, memberinfo as m, groupboard as b
+		from memberinfo as m, groupboard as b
 		left outer join file f
 		on f.bno = b.bno
 		left outer join requestboard r
 		on r.bno = b.bno
 		where
-		b.categoryno = c.categoryno and
 		m.mi_memberno = b.memberno and
 		b.requestboolean = 1 and
 		r.reqstatus = #{reqstatus} and

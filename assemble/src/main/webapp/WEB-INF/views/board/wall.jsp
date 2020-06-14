@@ -34,9 +34,8 @@
 			
 			var bno = this.parentNode.childNodes[1].value;
 			var groupno = this.parentNode.childNodes[3].value;
-			var categoryno = this.parentNode.childNodes[5].value;
-			var memberno = this.parentNode.childNodes[7].value;
-			var contents = this.parentNode.childNodes[9].value;
+			var memberno = this.parentNode.childNodes[5].value;
+			var contents = this.parentNode.childNodes[7].value;
 			
 			
 			document.location.href = "insertComment?bno="+bno+"&groupno="+groupno+"&categoryno="+categoryno+"&contents="+contents+"&memberno="+memberno;
@@ -139,7 +138,6 @@
 					<td>
 						<input type="hidden" class="bno" name="bno" value="${i.bno }"/>
 						<input type="hidden" class="groupno" name="groupno" value="${i.groupno }"/>
-						<input type="hidden" class="categoryno" name="categoryno" value="${i.categoryno }"/>
 						<input type="hidden" class="memberno" name="memberno" value="${i.memberno }"/>
 						<input type="text" name="recomment" id="recomment" />
 						<input type="button" class="re" value="댓글달기" />

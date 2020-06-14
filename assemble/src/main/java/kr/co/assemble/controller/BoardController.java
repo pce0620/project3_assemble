@@ -36,7 +36,6 @@ public class BoardController {
 	@RequestMapping(value = "/writeOk")
 	public String writeOk(
 			@RequestParam(value = "grNum") int grNum,
-			@RequestParam(value = "cgNum") int cgNum,
 			@RequestParam(value = "memNum") int memNum,
 			@RequestParam(value = "contents") String contents,
 			@RequestParam(value = "fileStatus") int status, Model model) {
@@ -44,7 +43,6 @@ public class BoardController {
 		BoardDTO dto = new BoardDTO();
 		
 		dto.setGroupno(grNum);
-		dto.setCategoryno(cgNum);
 		dto.setMemberno(memNum);
 		dto.setBoardcontents(contents);
 		dto.setFilestatus(status);

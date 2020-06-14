@@ -1,49 +1,43 @@
 package kr.co.assemble.dto;
 
-public class Groupboard_Memberinfo_FileDTO {
-	private int memberno;
+import java.util.Date;
+
+public class MyWriteDTO {
 	private String mi_memname;
 	private String mi_memid;
+	private int memberno;
 	private int bno;
 	private int groupno;
-	private String boarddate;
+	private String groupname;
+	private int boardnotice;
+	private Date boarddate;
 	private String boardcontents;
 	private int boardlike;
 	private int boardhate;
 	private int requestboolean;
-	private int boardnotice;
-	private String filepath;
-	private String fileName;
+	private String filename;
 	private int reqstatus;
 	
-	public Groupboard_Memberinfo_FileDTO() {}
+	public MyWriteDTO() {}
 
-	public Groupboard_Memberinfo_FileDTO(int memberno, String mi_memname, String mi_memid, int bno, int groupno,
-			String boarddate, String boardcontents, int boardlike, int boardhate, int requestboolean,
-			int boardnotice, String filepath, String fileName, int reqstatus) {
+	public MyWriteDTO(String mi_memname, String mi_memid, int memberno, int bno, int groupno, String groupname,
+			int boardnotice, Date boarddate, String boardcontents, int boardlike, int boardhate, int requestboolean,
+			String filename, int reqstatus) {
 		super();
-		this.memberno = memberno;
 		this.mi_memname = mi_memname;
 		this.mi_memid = mi_memid;
+		this.memberno = memberno;
 		this.bno = bno;
 		this.groupno = groupno;
+		this.groupname = groupname;
+		this.boardnotice = boardnotice;
 		this.boarddate = boarddate;
 		this.boardcontents = boardcontents;
 		this.boardlike = boardlike;
 		this.boardhate = boardhate;
 		this.requestboolean = requestboolean;
-		this.boardnotice = boardnotice;
-		this.filepath = filepath;
-		this.fileName = fileName;
+		this.filename = filename;
 		this.reqstatus = reqstatus;
-	}
-
-	public int getMemberno() {
-		return memberno;
-	}
-
-	public void setMemberno(int memberno) {
-		this.memberno = memberno;
 	}
 
 	public String getMi_memname() {
@@ -62,6 +56,14 @@ public class Groupboard_Memberinfo_FileDTO {
 		this.mi_memid = mi_memid;
 	}
 
+	public int getMemberno() {
+		return memberno;
+	}
+
+	public void setMemberno(int memberno) {
+		this.memberno = memberno;
+	}
+
 	public int getBno() {
 		return bno;
 	}
@@ -78,11 +80,27 @@ public class Groupboard_Memberinfo_FileDTO {
 		this.groupno = groupno;
 	}
 
-	public String getBoarddate() {
+	public String getGroupname() {
+		return groupname;
+	}
+
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
+	}
+
+	public int getBoardnotice() {
+		return boardnotice;
+	}
+
+	public void setBoardnotice(int boardnotice) {
+		this.boardnotice = boardnotice;
+	}
+
+	public Date getBoarddate() {
 		return boarddate;
 	}
 
-	public void setBoarddate(String boarddate) {
+	public void setBoarddate(Date boarddate) {
 		this.boarddate = boarddate;
 	}
 
@@ -118,28 +136,12 @@ public class Groupboard_Memberinfo_FileDTO {
 		this.requestboolean = requestboolean;
 	}
 
-	public int getBoardnotice() {
-		return boardnotice;
+	public String getFilename() {
+		return filename;
 	}
 
-	public void setBoardnotice(int boardnotice) {
-		this.boardnotice = boardnotice;
-	}
-
-	public String getFilepath() {
-		return filepath;
-	}
-
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 	public int getReqstatus() {
@@ -149,8 +151,6 @@ public class Groupboard_Memberinfo_FileDTO {
 	public void setReqstatus(int reqstatus) {
 		this.reqstatus = reqstatus;
 	}
-
-	
 	
 	
 	

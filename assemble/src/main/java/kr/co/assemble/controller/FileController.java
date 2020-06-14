@@ -47,7 +47,6 @@ public class FileController {
     public String upload(
     	@RequestParam(value = "uploadFile", required = false) MultipartFile mf, HttpServletRequest request,
     	@RequestParam(value = "grNum") int grNum,
-		@RequestParam(value = "cgNum") int cgNum,
 		@RequestParam(value = "memNum") int memNum,
 		@RequestParam(value = "contents") String contents,
 		@RequestParam(value = "fileStatus") int fileStatus, Model model) {
@@ -60,7 +59,6 @@ public class FileController {
 		BoardDTO bdto = new BoardDTO();
 		
 		bdto.setGroupno(grNum);
-		bdto.setCategoryno(cgNum);
 		bdto.setMemberno(memNum);
 		bdto.setBoardcontents(contents);
 		bdto.setFilestatus(1);
@@ -110,7 +108,7 @@ public class FileController {
 	@PostMapping(value = "/requestFileOk")
 	public String request(
 			@RequestParam(value = "uploadFile", required = false) MultipartFile mf, HttpServletRequest request,
-			@RequestParam(value = "grNum") int grNum, @RequestParam(value = "cgNum") int cgNum,
+			@RequestParam(value = "grNum") int grNum,
 			@RequestParam(value = "memNum") int memNum, @RequestParam(value = "response") String response,
 			@RequestParam(value = "contents") String contents, Model model) {
 		
@@ -118,7 +116,6 @@ public class FileController {
 		
 		BoardDTO dto = new BoardDTO();
 		dto.setGroupno(grNum);
-		dto.setCategoryno(cgNum);
 		dto.setMemberno(memNum);
 		dto.setBoardcontents(contents);
 		dto.setFilestatus(1);

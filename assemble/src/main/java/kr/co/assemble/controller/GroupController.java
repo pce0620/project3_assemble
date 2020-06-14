@@ -48,7 +48,7 @@ public class GroupController {
 		GroupDTO dto = new GroupDTO();
 		
 		//멤버넘버 세션에서 받아오기
-		dto.setMemberno(2);
+		dto.setMemberno(4);
 		dto.setGroupname(name);
 		dao.insertGroup(dto);
 		

@@ -6,7 +6,6 @@ public class RecommentDTO {
 	private int reno;
 	private int bno;
 	private int groupno;
-	private int categoryno;
 	private int memberno;
 	private Date redate;
 	private String reid;
@@ -14,13 +13,12 @@ public class RecommentDTO {
 	
 	public RecommentDTO() {}
 
-	public RecommentDTO(int reno, int bno, int groupno, int categoryno, int memberno, Date redate, String reid,
+	public RecommentDTO(int reno, int bno, int groupno, int memberno, Date redate, String reid,
 			String recontents) {
 		super();
 		this.reno = reno;
 		this.bno = bno;
 		this.groupno = groupno;
-		this.categoryno = categoryno;
 		this.memberno = memberno;
 		this.redate = redate;
 		this.reid = reid;
@@ -49,14 +47,6 @@ public class RecommentDTO {
 
 	public void setGroupno(int groupno) {
 		this.groupno = groupno;
-	}
-
-	public int getCategoryno() {
-		return categoryno;
-	}
-
-	public void setCategoryno(int categoryno) {
-		this.categoryno = categoryno;
 	}
 
 	public int getMemberno() {
