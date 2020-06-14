@@ -43,7 +43,7 @@ public class RequestController {
 	// 그룹보드에 요청 글쓰기와 동시에 요청테이블 업데이트
 	@PostMapping(value = "/requestOk")
 	public String request(
-			@RequestParam(value = "grNum") int grNum, @RequestParam(value = "cgNum") int cgNum,
+			@RequestParam(value = "grNum") int grNum,
 			@RequestParam(value = "memNum") int memNum, @RequestParam(value = "response") String response,
 			@RequestParam(value = "contents") String contents, Model model) {
 		
@@ -51,7 +51,6 @@ public class RequestController {
 		
 		BoardDTO dto = new BoardDTO();
 		dto.setGroupno(grNum);
-		dto.setCategoryno(cgNum);
 		dto.setMemberno(memNum);
 		dto.setBoardcontents(contents);
 		dto.setRequestboolean(1);

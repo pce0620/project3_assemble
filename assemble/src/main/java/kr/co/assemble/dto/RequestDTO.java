@@ -5,7 +5,6 @@ import java.util.Date;
 public class RequestDTO {
 	private int bno;
 	private int groupno;
-	private int categoryno;
 	private int memberno;
 	private int reqstatus;
 	private String responseid;
@@ -13,12 +12,11 @@ public class RequestDTO {
 	
 	public RequestDTO() {}
 
-	public RequestDTO(int bno, int groupno, int categoryno, int memberno, int reqstatus, String responseid,
+	public RequestDTO(int bno, int groupno, int memberno, int reqstatus, String responseid,
 			Date reqdate) {
 		super();
 		this.bno = bno;
 		this.groupno = groupno;
-		this.categoryno = categoryno;
 		this.memberno = memberno;
 		this.reqstatus = reqstatus;
 		this.responseid = responseid;
@@ -39,14 +37,6 @@ public class RequestDTO {
 
 	public void setGroupno(int groupno) {
 		this.groupno = groupno;
-	}
-
-	public int getCategoryno() {
-		return categoryno;
-	}
-
-	public void setCategoryno(int categoryno) {
-		this.categoryno = categoryno;
 	}
 
 	public int getMemberno() {

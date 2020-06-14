@@ -24,14 +24,12 @@ public class RecommentController {
 	public String reco(
 			@RequestParam(value = "bno") int bno,
 			@RequestParam(value = "groupno") int groupno,
-			@RequestParam(value = "categoryno") int categoryno,
 			@RequestParam(value = "contents") String contents,
 			@RequestParam(value = "memberno") int memberno, Model model) {
 		
 		RecommentDTO dto = new RecommentDTO();
 		dto.setBno(bno);
 		dto.setGroupno(groupno);
-		dto.setCategoryno(categoryno);
 		dto.setRecontents(contents);
 		dto.setMemberno(memberno);
 		

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.GroupSelectListDAO;
 import kr.co.assemble.dto.ComposedMemberInfoDTO;
-import kr.co.assemble.dto.GroupDTO;
 import kr.co.assemble.dto.GroupFileDTO;
 import kr.co.assemble.dto.Groupboard_Memberinfo_FileDTO;
 

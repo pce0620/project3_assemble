@@ -6,7 +6,6 @@ public class BoardDTO {
 	
 	private int bno;
 	private int groupno;
-	private int categoryno;
 	private int memberno;
 	private Date boarddate;
 	private String boardcontents;
@@ -18,12 +17,11 @@ public class BoardDTO {
 	
 	public BoardDTO() {}
 
-	public BoardDTO(int bno, int groupno, int categoryno, int memberno, Date boarddate, String boardcontents,
+	public BoardDTO(int bno, int groupno,int memberno, Date boarddate, String boardcontents,
 			int boardnotice, int boardlike, int boardhate, int requestboolean, int filestatus) {
 		super();
 		this.bno = bno;
 		this.groupno = groupno;
-		this.categoryno = categoryno;
 		this.memberno = memberno;
 		this.boarddate = boarddate;
 		this.boardcontents = boardcontents;
@@ -48,14 +46,6 @@ public class BoardDTO {
 
 	public void setGroupno(int groupno) {
 		this.groupno = groupno;
-	}
-
-	public int getCategoryno() {
-		return categoryno;
-	}
-
-	public void setCategoryno(int categoryno) {
-		this.categoryno = categoryno;
 	}
 
 	public int getMemberno() {
