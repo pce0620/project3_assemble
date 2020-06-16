@@ -2,7 +2,6 @@ package kr.co.assemble.dao;
 
 import java.util.List;
 
-import kr.co.assemble.dto.CategoryComposedDTO;
 import kr.co.assemble.dto.CategoryDTO;
 
 public interface CategoryDAO {
@@ -10,10 +9,12 @@ public interface CategoryDAO {
 	public void insertCategory(CategoryDTO dto);
 
 	//전체 카테고리 조회
-	public List<CategoryComposedDTO> selectCategory(CategoryComposedDTO dto);
+	public List<CategoryDTO> selectCategory(CategoryDTO dto);
 	
 	//카테고리 이름 변경
 	public void updateName(CategoryDTO dto);
 	
+	//내가 속한 어셈블에 내가 속한 카테고리만 출력
+	public List<CategoryDTO> myCategory(CategoryDTO dto);
 	
 }

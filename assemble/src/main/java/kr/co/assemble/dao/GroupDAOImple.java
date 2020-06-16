@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.assemble.dto.AssembleGroupDTO;
 import kr.co.assemble.dto.GroupDTO;
 
 @Repository
@@ -39,7 +40,7 @@ public class GroupDAOImple implements GroupDAO{
 
 	//그룹번호 전체 조회
 	@Override
-	public List<GroupDTO> selectGroup() {
+	public List<AssembleGroupDTO> selectGroup() {
 		return ss.selectList("selectAllGroup");
 	}
 

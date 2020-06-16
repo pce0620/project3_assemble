@@ -4,6 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace=" ">
+	<!-- 어셈블 전체 멤버 출력 -->
+	<select id="assembleMember" resultType="kr.co.assemble.dto.MemberinfoDTO">
+		select mi_memid, mi_memname
+		from memberinfo
+		where mi_assemblename = #{assemblename}
+	</select>
+		
 	
 	<!-- ********************카테고리******************* -->
 	<!-- 카테고리만 생성 / 세션에 있는 memberno 가져오기 -->
@@ -22,8 +29,7 @@
 	    ca.publicsecret = 1;
 	</select>
 	
-	
-	
+	<!-- 카테고리 이름바꾸기 -->
 	<update id="updateCategoryName" parameterType="CategoryDto">
 		update category
 		set categoryname = #{categoryname}
@@ -31,19 +37,36 @@
 	</update>
 	
 	
+	<!-- 내가 속한 카테고리 리스트만 뽑기 -->
+	<select id="myCategory" resultType="CategoryDTO" parameterType="CategoryDto">
+		select distinct ca.categoryno, ca.categoryname
+		from category as ca left join composed as co
+		on ca.categoryno = co.categoryno
+		where ca.assemblename = #{assemblename}
+		and co.memberno = #{memberno}
+	</select>
+	
 	
 	
 	
 	<!-- **********************그룹******************** -->
 	<!-- 그룹 전체 조회 -->
-	<select id="selectAllGroup" resultType="GroupDto">
-		select * from groups
+	<select id="selectAllGroup" resultType="AGDto" parameterType="AGDto">
+		select distinct g.groupname, a.ai_assemblename, g.groupno, g.categoryno, c.memberno
+		from assembleinfo as a join groups as g 
+		on a.ai_memberno = g.memberno
+		left join composed as c
+		on c.groupno = g.groupno and c.memberno = #{memberno}
+		where a.ai_assemblename = #{assemblename}
 	</select>
 	
-	<!-- 카테고리별 그룹 조회 -->
+	<!-- 카테고리별 그룹 조회  내가 속한 그룹만 나오도록-->
 	<select id="selectCategoryGroup" resultType="GroupDTO">
-		select * from groups
-		where categoryno = #{categoryno}
+		select g.groupname
+		from groups as g join composed as c
+		on g.groupno = c.groupno
+		where g.categoryno = #{categoryno}
+		and c.memberno = #{memberno}
 	</select>
 	
 	<!-- 그룹생성시 미분류 카테고리를 1번이라고 했을때, 처음 생성그룹은 항상 카테고리 1번으로 들어감. -->
@@ -192,15 +215,38 @@
 	</update>
 	
 	<!-- 내가 받은 요청 리스트 (내 이름, 내 아이디로 요청이들어온것) -->
-	<select id="myReq" parameterType="MRG_Dto" resultType="MRG_Dto">
-		select r.bno, r.memberno, r.reqstatus, r.responseid, 
-		g.boardcontents, g.boarddate, g.boardlike, g.boardhate, f.filename
-		from memberinfo as m, requestboard as r, groupboard as g
-		left outer join file f
-		on f.bno = g.bno
-		where r.bno = g.bno
-		and (m.mi_memname = r.responseid or m.mi_memid = r.responseid)
-		and m.mi_memberno = #{memberno}
+	<select id="myReq" parameterType="String" resultType="MRG_Dto">
+		select m.mi_memname, m.mi_memid, g.groupname, gb.bno, gb.boarddate, gb.boardcontents, gb.requestboolean, gb.filestatus, r.reqstatus, r.responseid, f.filename
+		from groups as g 
+		left join groupboard as gb 
+		on g.groupno = gb.groupno
+		left join requestboard as r
+		on gb.bno = r.bno
+		left join file as f
+		on f.bno = gb.bno
+		left join memberinfo as m
+		on r.memberno = m.mi_memberno
+		where mi_assemblename = #{assemblename}
+		and (r.responseid like #{valueid} or
+		r.responseid like #{valuename})
+	</select>
+	
+	<!-- 내가 받은 요청 리스트의 요청상황 -->
+	<select id="myReqStatus" parameterType="String" resultType="MRG_Dto">
+		select m.mi_memname, m.mi_memid, g.groupname, gb.bno, gb.boarddate, gb.boardcontents, gb.requestboolean, gb.filestatus, r.reqstatus, r.responseid, f.filename
+		from groups as g 
+		left join groupboard as gb 
+		on g.groupno = gb.groupno
+		left join requestboard as r
+		on gb.bno = r.bno
+		left join file as f
+		on f.bno = gb.bno
+		left join memberinfo as m
+		on r.memberno = m.mi_memberno
+		where mi_assemblename = #{assemblename}
+		and r.reqstatus = #{reqstatus}
+		and (r.responseid like #{valueid} or
+		r.responseid like #{valuename})
 	</select>
 	
 	
@@ -358,6 +404,18 @@
 		where bno = #{bno} and groupno = #{groupno} and memberno = #{memberno} and mark_memno = #{mark_memno}
 	</delete>
 	
+	
+	
+	<!-- *************공지사항************ -->
+	<update id="updateNotice" parameterType="BoardDto">
+		update groupboard
+		set boardnotice =
+		case
+		when 0 then boardnotice = 1
+		when 1 then boardnotice = 0
+		end
+		where bno = #{bno}
+	</update>
 	
 	
 	

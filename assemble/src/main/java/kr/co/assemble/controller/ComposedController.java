@@ -26,17 +26,16 @@ public class ComposedController {
 	//속해있지않다면 참여가되고 속해있다면 나가기가됨
 	@RequestMapping(value = "/attendOk")
 	public String inviteMemOk(
-			@RequestParam(value = "cgNum") int cgNum,
-			@RequestParam(value = "grNum") int grNum,
-			@RequestParam(value = "memNum") int memNum, Model model) {
+			@RequestParam(value = "groupno") int groupno,
+			@RequestParam(value = "memberno") int memberno, Model model) {
 		
 		ComposedDTO dto = new ComposedDTO();
 		
-		dto.setCategoryno(cgNum);
-		dto.setGroupno(grNum);
-		dto.setMemberno(memNum);
+		dto.setGroupno(groupno);
+		dto.setMemberno(memberno);
 		
 		int n = dao.composedGroup(dto);
+		
 		System.out.println(n);
 		
 		if(n == 0) {
@@ -45,8 +44,7 @@ public class ComposedController {
 			dao.deleteGroup(dto);
 		}
 		
-		model.addAttribute("dto", dto);
-		
+		model.addAttribute("n", n);
 		return "composed/inviteOk";
 	}
 

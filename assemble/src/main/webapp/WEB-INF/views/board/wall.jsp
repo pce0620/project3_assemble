@@ -89,6 +89,14 @@
 			
 		});
 		
+		//공지
+		$(".notice").click(function(){
+			var bno = this.parentNode.childNodes[1].value;
+			var groupno = this.parentNode.childNodes[3].value;
+			
+			document.location.href = "notice?bno="+bno+"&groupno="+groupno;
+			
+		});
 
 	});
 		
@@ -114,6 +122,7 @@
 					<th>요청 status</th>
 					<th>요청 상태 변경</th>
 					<th>북마크</th>
+					<th>공지등록</th>
 			</tr>
 				<tr>
 					<td>${i.memberno }</td>
@@ -155,6 +164,11 @@
 						<input type="hidden" class="groupno" name="groupno" value="${i.groupno }"/>
 						<input type="hidden" class="memberno" name="memberno" value="${i.memberno }"/>
 						<input type="button" class="mark" value="북마크" />
+					</td>
+					<td>
+						<input type="hidden" class="bno" name="bno" value="${i.bno }"/>
+						<input type="hidden" class="groupno" name="groupno" value="${i.groupno }"/>
+						<input type="button" value="공지" class="notice"/>
 					</td>
 				</tr>
 

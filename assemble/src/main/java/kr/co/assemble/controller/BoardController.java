@@ -135,7 +135,20 @@ public class BoardController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	
+	//공지사항 등록1, 취소0
+	@RequestMapping(value = "/notice")
+	public String updateNotice(
+			@RequestParam(value = "bno") int bno,
+			@RequestParam(value = "groupno") int groupno, Model model) {
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setBno(bno);
+		dao.updateNotice(dto);
+		
+		model.addAttribute("groupno", groupno);
+		
+		return "redirect:/wall";
+	}
 	
 	
 	

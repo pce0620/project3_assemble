@@ -2,6 +2,8 @@ package kr.co.assemble.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.CategoryDAO;
-import kr.co.assemble.dto.CategoryComposedDTO;
 import kr.co.assemble.dto.CategoryDTO;
 
 @Controller
@@ -55,12 +56,12 @@ public class CategoryController {
 	@RequestMapping(value = "/categoryList")
 	public String categoryList(Model model) {
 		
-		CategoryComposedDTO dto = new CategoryComposedDTO();
+		CategoryDTO dto = new CategoryDTO();
 		//세션값
 		dto.setMemberno(1);
 		dto.setAssemblename("abc");
 		
-		List<CategoryComposedDTO> list = cdao.selectCategory(dto);
+		List<CategoryDTO> list = cdao.selectCategory(dto);
 		model.addAttribute("list", list);
 				
 		return "category/categoryForm";
@@ -87,7 +88,22 @@ public class CategoryController {
 	}
 	
 	
-	
+	//내가 속한 카테고리 조회
+	@RequestMapping(value = "myCategory")
+	public String myCate(HttpSession session, Model model) {
+		
+		int memberno = (int)session.getAttribute("memberno");
+		String aseemblename = (String)session.getAttribute("mi_assembleName");
+		
+		CategoryDTO dto = new CategoryDTO();
+		dto.setMemberno(memberno);
+		dto.setAssemblename(aseemblename);
+		List<CategoryDTO> list = cdao.myCategory(dto);
+		
+		model.addAttribute("mylist", list);
+		
+		return null;
+	}
 	
 	
 	

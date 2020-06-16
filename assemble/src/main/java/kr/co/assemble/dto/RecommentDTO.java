@@ -7,13 +7,13 @@ public class RecommentDTO {
 	private int bno;
 	private int groupno;
 	private int memberno;
-	private Date redate;
+	private String redate;
 	private String reid;
 	private String recontents;
 	
 	public RecommentDTO() {}
 
-	public RecommentDTO(int reno, int bno, int groupno, int memberno, Date redate, String reid,
+	public RecommentDTO(int reno, int bno, int groupno, int memberno, String redate, String reid,
 			String recontents) {
 		super();
 		this.reno = reno;
@@ -57,11 +57,11 @@ public class RecommentDTO {
 		this.memberno = memberno;
 	}
 
-	public Date getRedate() {
+	public String getRedate() {
 		return redate;
 	}
 
-	public void setRedate(Date redate) {
+	public void setRedate(String redate) {
 		this.redate = redate;
 	}
 
