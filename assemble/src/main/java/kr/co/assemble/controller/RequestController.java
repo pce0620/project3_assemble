@@ -2,6 +2,8 @@ package kr.co.assemble.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -97,11 +99,13 @@ public class RequestController {
 	
 	//내가 받은 요청만 출력
 	@RequestMapping(value = "/myRequest")
-	public String myreq(
-			@RequestParam(value = "memberno") int memberno, Model model) {
-		//memberno는 세션의 값
+	public String myreq(HttpSession session, Model model) {
+		
 		MemReqGroupDTO dto = new MemReqGroupDTO();
-		dto.setMemberno(memberno);
+		//id와 name을 현재 나의 세션값으로
+		dto.setValueid("lw");
+		dto.setValuename("이로운");
+			
 		List<MemReqGroupDTO> list = mrgDao.myReq(dto);
 		
 		model.addAttribute("list", list);

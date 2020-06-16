@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.assemble.dao.GroupDAO;
+import kr.co.assemble.dto.AssembleGroupDTO;
 import kr.co.assemble.dto.GroupDTO;
 
 @Controller
@@ -25,7 +26,7 @@ public class GroupController {
 	@RequestMapping(value = "/groups")
 	public String groups(Model model) {
 		
-		List<GroupDTO> list = dao.selectGroup();
+		List<AssembleGroupDTO> list = dao.selectGroup();
 		model.addAttribute("list", list);
 		
 		return "group/groups";

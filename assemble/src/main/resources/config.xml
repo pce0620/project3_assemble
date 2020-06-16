@@ -19,6 +19,8 @@
 		<typeAlias type="kr.co.assemble.dto.MemReqGroupDTO" alias="MRG_Dto"/>
 		<typeAlias type="kr.co.assemble.dto.BookMarkDTO" alias="MarkDto"/>
 		<typeAlias type="kr.co.assemble.dto.MyWriteDTO" alias="MyWriteDto"/>
+		<typeAlias type="kr.co.assemble.dto.AssembleGroupDTO" alias="AGDto"/>
+		
 		
 	</typeAliases>
 </configuration>

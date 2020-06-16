@@ -2,6 +2,7 @@ package kr.co.assemble.dao;
 
 import java.util.List;
 
+import kr.co.assemble.dto.AssembleGroupDTO;
 import kr.co.assemble.dto.GroupDTO;
 
 public interface GroupDAO {
@@ -15,7 +16,7 @@ public interface GroupDAO {
 	public void updateName(GroupDTO dto);
 	
 	//그룹 전체 조회
-	public List<GroupDTO> selectGroup();
+	public List<AssembleGroupDTO> selectGroup();
 	
 	//카테고리별 그룹조회
 	public List<GroupDTO> grouplist(int categoryno);

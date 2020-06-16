@@ -27,7 +27,8 @@ public interface BoardDAO {
 	//request insert
 	public void insertRequest(BoardDTO dto);
 	
-	
+	//공지사항 등록 취소
+	public void updateNotice(BoardDTO dto);
 	
 	
 	

@@ -71,11 +71,17 @@ public class BoardDAOImple implements BoardDAO{
 	public void insertRequest(BoardDTO dto) {
 		ss.insert("insertRequest", dto);
 	}
-	
+
 	
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	
+	//공지사항 등록, 취소
+	@Override
+	public void updateNotice(BoardDTO dto) {
+		ss.update("updateNotice", dto);
+	}
 	
 	
 	
